@@ -24,12 +24,12 @@ public class CarroDAO {
     public List<Carro> getListarCarro() {
         Conexao conn = new Conexao();
         Connection conexao = conn.getConexao();
-        String sql = "SELECT * FROM carro";
+        String sql = "SELECT * FROM carros";
         List<Carro> listCarros = new ArrayList<Carro>();
         try {
             PreparedStatement comando = conexao.prepareStatement(sql);
             ResultSet resultado = comando.executeQuery();
-            while(resultado.next()){
+            while (resultado.next()) {
                 Carro objCarro = new Carro();
                 objCarro.setIdCarro(resultado.getInt("idCarro"));
                 objCarro.setAnoFabricacao(resultado.getInt("anoFabricacao"));
@@ -41,9 +41,31 @@ public class CarroDAO {
                 listCarros.add(objCarro);
             }
         } catch (SQLException ex) {
-         
+
         }
         return listCarros;
+    }
+
+    public boolean inserir(Carro objCarro) {
+        try {
+            Conexao conn = new Conexao();
+            Connection conexao = conn.getConexao();
+            String sql = "INSERT INTO `carros`(`fabricante`, `modelo`, `anoFabricacao`, `cor`, `km`, `valor`)";
+
+            sql += " VALUES(";
+            sql += "'" + objCarro.getFabricante() + "',"; //varchar 
+            sql += "'" + objCarro.getModelo() + "',"; //varchar 
+            sql += objCarro.getAnoFabricacao() + ","; //inteiro 
+            sql += "'" + objCarro.getCor() + "',"; //varchar 
+            sql += objCarro.getKm() + ","; //decimal
+            sql += objCarro.getValor(); //decimal
+            sql += " );";
+            PreparedStatement comando = conexao.prepareStatement(sql);
+            comando.executeUpdate(sql);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 }

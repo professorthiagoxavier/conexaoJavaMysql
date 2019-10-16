@@ -28,7 +28,7 @@ public class Conexao {
         Connection conn = null;
         String driveName = "com.mysql.jdbc.Driver";
         String servidor = "localhost";
-        String schema = "loja";
+        String schema = "crud";
         String usuario = "root";
         String senha = "";
 		
