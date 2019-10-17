@@ -10,13 +10,15 @@ import br.uninove.poo.dao.Conexao;
 import br.uninove.poo.negocio.Carro;
 import com.mysql.jdbc.Connection;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  *
  * @author internet
  */
 public class Principal {
-
+ //F8 - percorrer linha a linha
+    
     public static void main(String[] args) {
         Conexao objConexao = new Conexao();
         Connection conn = objConexao.getConexao();//chamando o método conectar
@@ -48,6 +50,17 @@ public class Principal {
             System.out.print(item.getValor() + ",");
             System.out.println("");
         }
-
+        
+        Scanner teclado = new Scanner(System.in);
+        Carro objCarroAtualizar = new Carro();
+        System.out.println("Escolha o id de um veículo: ");
+        int id = teclado.nextInt();
+        
+        System.out.println("Informe o novo modelo: ");
+        String modelo = teclado.next();
+        
+        objCarroAtualizar.setIdCarro(id);
+        objCarroAtualizar.setModelo(modelo);
+        objCarroDao.atualizar(objCarroAtualizar);
     }
 }

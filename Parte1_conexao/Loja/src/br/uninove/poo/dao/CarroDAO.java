@@ -68,4 +68,44 @@ public class CarroDAO {
         }
     }
 
+    public boolean atualizar(Carro objCarro) {
+        Conexao conn = new Conexao();
+        //alt + shif + f (identação)
+        try {
+            Connection conexao = conn.getConexao();
+            String sql = "Update carros set ";
+            sql += " fabricante = '" + objCarro.getFabricante() + "',";//varchar
+            sql += " modelo = '" + objCarro.getModelo() + "',";//varchar
+            sql += " anoFabricacao =" + objCarro.getAnoFabricacao() + ",";//inteiro
+            sql += " cor ='" + objCarro.getCor() + "',";//varchar
+            sql += " km = " + objCarro.getKm() + ","; //decimal
+            sql += " valor = " + objCarro.getValor(); //decimal. No último não há necessidade de virgula
+            sql += " where idCarro=" + objCarro.getIdCarro() + ";";
+
+            PreparedStatement comando = conexao.prepareStatement(sql);
+            comando.executeUpdate(sql);
+            return true;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean delete(int idCarro) {
+        String sql = "delete from carros where idCarro = ?";
+        Conexao conn = new Conexao();
+        //trycatch + tab + tab
+        try {
+            Connection conexao = conn.getConexao();
+            PreparedStatement comando = conexao.prepareStatement(sql);
+            comando.setInt(1, idCarro);
+            comando.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+
+        return true;
+    }
 }
